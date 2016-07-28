@@ -1,2 +1,2 @@
 # cspot
-A small linter written in plain C.
+A small linter written in plain C. (WIP)
