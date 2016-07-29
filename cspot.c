@@ -1,17 +1,10 @@
 /* Copyright 2016 Marc Volker Dickmann */
 /* Project: CSpot */
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
-
-static void cspot_log_error (char *description)
-{
-	printf ("Error: %s\n", description);
-}
-
-static void cspot_log_highlight (char *description, unsigned int line, unsigned int column)
-{
-	printf ("Highlight: %s at L: %i C: %i.\n", description, line, column);
-}
+#include "src/cspot_log.h"
+#include "src/cspot_filter.h"
 
 static void cspot_file_process (char *filename)
 {
@@ -31,17 +24,14 @@ static void cspot_file_process (char *filename)
 	
 	while (fgets (line, sizeof (line), src_file) != NULL)
 	{
+		/* TODO: Find a better solution to this! */
 		if (strlen (line) > 2)
 		{
-			/* INFO: strpbrk is used to only report lines with content.*/
-			/* TODO: Find a better solution to this! */
-			if (line[strlen (line)-2] == ' ' &&
-			    strpbrk (line, "abcdefghijklmnopqrstufwxyz.,<{[]}>'#\\/\"!") != NULL)
+			if (cspot_filter_ending_char (line, ' ') == true)
 			{
 				cspot_log_highlight ("Found an ending space", linecount, strlen (line)-1);
 			}
-			else if (line[strlen (line)-2] == '\t' &&
-				 strpbrk (line, "abcdefghijklmnopqrstufwxyz.,<{[]}>'#\\/\"!") != NULL)
+			else if (cspot_filter_ending_char (line, '\t') == true)
 			{
 				cspot_log_highlight ("Found an ending tab", linecount, strlen (line)-1);
 			}
