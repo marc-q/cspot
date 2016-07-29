@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-#include "cspot_log.h"
 #include "cspot_filter.h"
 
 bool cspot_filter_is_empty (char *str)
