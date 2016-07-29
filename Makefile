@@ -1,5 +1,5 @@
 CC = gcc
-OBJECTS = cspot.c
+OBJECTS = src/cspot_log.c src/cspot_filter.c cspot.c
 LIBS =
 CFLAGS = -Wall -O2
 BINDIR = $(DESTDIR)/usr/bin
@@ -10,4 +10,3 @@ cspot: $(OBJECTS)
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<
-
