@@ -6,4 +6,7 @@ For compiling cspot run the command **make** in the directory containing the Mak
 
 ### Usage
 To check an file run the command below while replacing filename with the path to the actual file.
-```$ ./cspot <filename>```
+
+```sh
+$ ./cspot [FILENAME]
+```
