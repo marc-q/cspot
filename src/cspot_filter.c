@@ -1,4 +1,4 @@
-/* Copyright 2016 Marc Volker Dickmann */
+/* Copyright 2016 - 2017 Marc Volker Dickmann */
 /* Project: CSpot */
 #include <stdio.h>
 #include <stdbool.h>
