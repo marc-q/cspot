@@ -1,4 +1,4 @@
-/* Copyright 2016 Marc Volker Dickmann */
+/* Copyright 2016 - 2017 Marc Volker Dickmann */
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -124,7 +124,7 @@ int main (int argc, char *argv[])
 	
 	points = 0;
 	
-	printf ("CSpot-Tests (C) 2016 Marc Volker Dickmann\n\n");
+	printf ("CSpot-Tests (C) 2016 - 2017 Marc Volker Dickmann\n\n");
 	
 	points += tst_filter_is_empty ();
 	points += tst_filter_ending_char ();
