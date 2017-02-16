@@ -1,4 +1,6 @@
-/* Copyright 2016 - 2017 Marc Volker Dickmann */
+/* Copyright 2016 - 2017 Marc Volker Dickmann
+ * Project: CSpot
+ */
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -14,11 +16,12 @@
    |--------------------------------------------| */
 
 /*
-	Function: tst_print_success (char* tstname);
-	Description: Prints the test success message.
-	InitVersion: 0.0.1
-*/
-static void tst_print_success (char* tstname)
+ *	Function: tst_print_success (const char *tstname);
+ *	Description: Prints the test success message.
+ *	InitVersion: 0.0.1
+ */
+static void
+tst_print_success (const char *tstname)
 {
 	printf ("%s:", tstname);
 	
@@ -39,11 +42,12 @@ static void tst_print_success (char* tstname)
 }
 
 /*
-	Function: tst_print_fail (char* tstname);
-	Description: Prints the test failure message.
-	InitVersion: 0.0.1
-*/
-static void tst_print_fail (char* tstname)
+ *	Function: tst_print_fail (const char *tstname);
+ *	Description: Prints the test failure message.
+ *	InitVersion: 0.0.1
+ */
+static void
+tst_print_fail (const char *tstname)
 {
 	printf ("%s:", tstname);
 	
@@ -64,11 +68,12 @@ static void tst_print_fail (char* tstname)
 }
 
 /*
-	Function: tst_print_summary (int points);
-	Description: Prints the summary of all tests.
-	InitVersion: 0.0.1
-*/
-static void tst_print_summary (int points)
+ *	Function: tst_print_summary (const int points);
+ *	Description: Prints the summary of all tests.
+ *	InitVersion: 0.0.1
+ */
+static void
+tst_print_summary (const int points)
 {
 	printf ("\n+=======================+\n");
 	printf ("|  Summary of all tests |\n");
@@ -84,14 +89,15 @@ static void tst_print_summary (int points)
    |			Tests			|
    |--------------------------------------------| */
 
-static short tst_filter_is_empty (void)
+static int
+tst_filter_is_empty (void)
 {
-	if (cspot_filter_is_empty ("\0") == true &&
-	    cspot_filter_is_empty (" \0") == true &&
-	    cspot_filter_is_empty ("\t\n\0") == true &&
-	    cspot_filter_is_empty ("a\0") == false &&
-	    cspot_filter_is_empty (".\n\0") == false &&
-	    cspot_filter_is_empty (" a simple test.\n\0") == false)
+	if (cspot_filter_is_empty ("\0") &&
+	    cspot_filter_is_empty (" \0") &&
+	    cspot_filter_is_empty ("\t\n\0") &&
+	    !cspot_filter_is_empty ("a\0") &&
+	    !cspot_filter_is_empty (".\n\0") &&
+	    !cspot_filter_is_empty (" a simple test.\n\0"))
 	{
 		tst_print_success ("Filter_IsEmpty");
 		return TESTS_PASS;
@@ -101,14 +107,15 @@ static short tst_filter_is_empty (void)
 	return TESTS_FAIL;
 }
 
-static short tst_filter_ending_char (void)
+static int
+tst_filter_ending_char (void)
 {
-	if (cspot_filter_ending_char ("aa \n\0", ' ') == true &&
-	    cspot_filter_ending_char ("aa\t\n\0", '\t') == true &&
-	    cspot_filter_ending_char ("}\t\n\0", '\t') == true &&
-	    cspot_filter_ending_char ("\n\0", '\t') == false &&
-	    cspot_filter_ending_char (".aaa\n\0", '\t') == false &&
-	    cspot_filter_ending_char ("\n\0", '\t') == false)
+	if (cspot_filter_ending_char ("aa \n\0", ' ') &&
+	    cspot_filter_ending_char ("aa\t\n\0", '\t') &&
+	    cspot_filter_ending_char ("}\t\n\0", '\t') &&
+	    !cspot_filter_ending_char ("\n\0", '\t') &&
+	    !cspot_filter_ending_char (".aaa\n\0", '\t') &&
+	    !cspot_filter_ending_char ("\n\0", '\t'))
 	{
 		tst_print_success ("Filter_EndingChar");
 		return TESTS_PASS;
@@ -118,18 +125,16 @@ static short tst_filter_ending_char (void)
 	return TESTS_FAIL;
 }
 
-int main (int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
-	int points;
-	
-	points = 0;
-	
 	printf ("CSpot-Tests (C) 2016 - 2017 Marc Volker Dickmann\n\n");
+	
+	int points = 0;
 	
 	points += tst_filter_is_empty ();
 	points += tst_filter_ending_char ();
 	
 	tst_print_summary (points);
-	
 	return 0;
 }
