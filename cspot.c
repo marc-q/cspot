@@ -23,7 +23,7 @@ cspot_file_process (const char *filename)
 	
 	while (fgets (line, sizeof (line), src_file) != NULL)
 	{
-		/* TODO: Find a better solution to this! */
+		// TODO: Find a better solution to this!
 		if (strlen (line) > 2)
 		{
 			if (cspot_filter_ending_char (line, ' '))
