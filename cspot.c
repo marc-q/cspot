@@ -1,18 +1,16 @@
-/* Copyright 2016 - 2017 Marc Volker Dickmann */
-/* Project: CSpot */
+/* Copyright 2016 - 2017 Marc Volker Dickmann
+ * Project: CSpot
+ */
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include "src/cspot_log.h"
 #include "src/cspot_filter.h"
 
-static void cspot_file_process (char *filename)
+static void
+cspot_file_process (const char *filename)
 {
-	unsigned int linecount;
-	char line[250];
-	FILE *src_file;
-	
-	src_file = fopen (filename, "r");
+	FILE *src_file = fopen (filename, "r");
 	
 	if (src_file == NULL)
 	{
@@ -20,20 +18,21 @@ static void cspot_file_process (char *filename)
 		return;
 	}
 	
-	linecount = 1;
+	char line[250];
+	size_t linecount = 1;
 	
 	while (fgets (line, sizeof (line), src_file) != NULL)
 	{
 		/* TODO: Find a better solution to this! */
 		if (strlen (line) > 2)
 		{
-			if (cspot_filter_ending_char (line, ' ') == true)
+			if (cspot_filter_ending_char (line, ' '))
 			{
-				cspot_log_highlight ("Found an ending space", linecount, strlen (line)-1);
+				cspot_log_highlight ("Found an ending space", linecount, strlen (line) - 1);
 			}
-			else if (cspot_filter_ending_char (line, '\t') == true)
+			else if (cspot_filter_ending_char (line, '\t'))
 			{
-				cspot_log_highlight ("Found an ending tab", linecount, strlen (line)-1);
+				cspot_log_highlight ("Found an ending tab", linecount, strlen (line) - 1);
 			}
 		}
 		
@@ -43,7 +42,8 @@ static void cspot_file_process (char *filename)
 	fclose (src_file);
 }
 
-int main (int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
 	printf ("CSpot v. 0.0.1 A (C) 2016 - 2017 Marc Volker Dickmann\n\n");
 	
